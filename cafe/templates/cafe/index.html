@@ -1,0 +1,264 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breeze Cafe</title>
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/tooplate-wave-cafe.css' %}">
+</head>
+<body>
+    <div class="tm-container">
+        <div class="tm-row">
+            <div class="tm-left">
+                <div class="tm-left-inner">
+                    <div class="tm-site-header">
+                        <i class="fas fa-coffee fa-3x tm-site-logo"></i>
+                        <h1 class="tm-site-name">The Breeze Cafe</h1>
+                        <p class="tm-site-location">Diani Beach, Mombasa</p>
+                        <div class="tm-site-lottie-container">
+                            <dotlottie-player src="https://lottie.host/c41f4d8b-4461-41ac-acaa-c851c818e95c/RX0d1H7ClE.lottie" 
+                                background="transparent" speed="1" 
+                                style="width: 100px; height: 100px" 
+                                loop autoplay>
+                            </dotlottie-player>
+                        </div>
+                    </div>
+                    <nav class="tm-site-nav">
+                        <ul class="tm-site-nav-ul">
+                            <li class="tm-page-nav-item"><a href="#drink" class="tm-page-link active"><i class="fas fa-mug-hot tm-page-link-icon"></i><span>Drink Menu</span></a></li>
+                            <li class="tm-page-nav-item"><a href="#about" class="tm-page-link"><i class="fas fa-users tm-page-link-icon"></i><span>About Us</span></a></li>
+                            <li class="tm-page-nav-item"><a href="#special" class="tm-page-link"><i class="fas fa-glass-martini tm-page-link-icon"></i><span>Special Meals</span></a></li>
+                            <li class="tm-page-nav-item"><a href="#contact" class="tm-page-link"><i class="fas fa-comments tm-page-link-icon"></i><span>Contact</span></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="tm-right">
+                <main class="tm-main">
+                    <!-- Drink Menu -->
+                    <div id="drink" class="tm-page-content">
+                        <nav class="tm-black-bg tm-drinks-nav">
+                            <ul>
+                                {% for category in drink_items.keys %}
+                                <li><a href="#" class="tm-tab-link {% if forloop.first %}active{% endif %}" data-id="{{ category.name|slugify }}">{{ category.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                        {% for category, items in drink_items.items %}
+                        <div id="{{ category.name|slugify }}" class="tm-tab-content" {% if not forloop.first %}style="display: none;"{% endif %}>
+                            <div class="tm-list">
+                                {% for item in items %}
+                                <div class="tm-list-item">
+                                    <img src="{{ item.image.url }}" alt="{{ item.name }}" class="tm-list-item-img">
+                                    <div class="tm-black-bg tm-list-item-text">
+                                        <h3 class="tm-list-item-name">{{ item.name }}<span class="tm-list-item-price">${{ item.price }}</span></h3>
+                                        <p class="tm-list-item-description">{{ item.description }}</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- About Us -->
+                    <div id="about" class="tm-page-content">
+                        <div class="tm-black-bg tm-mb-20 tm-about-box-1">
+                            <h2 class="tm-text-primary tm-about-header">{{ about_us.header }}</h2>
+                            <div class="tm-list-item tm-list-item-2">
+                                <img src="{{ about_us.image1.url }}" alt="Image" class="tm-list-item-img tm-list-item-img-big">
+                                <div class="tm-list-item-text-2">
+                                    <p>{{ about_us.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tm-black-bg tm-mb-20 tm-about-box-2">
+                            <div class="tm-list-item tm-list-item-2">
+                                <div class="tm-list-item-text-2">
+                                    <h2 class="tm-text-primary">{{ about_us.history_title }}</h2>
+                                    <p>{{ about_us.history_description }}</p>
+                                </div>
+                                <img src="{{ about_us.image2.url }}" alt="Image" class="tm-list-item-img tm-list-item-img-big tm-img-right">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Special Items -->
+                    <div id="special" class="tm-page-content">
+                        <div class="tm-special-items">
+                            {% for item in special_items %}
+                            <div class="tm-special-item">
+                                <div class="tm-special-item-image">
+                                    <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                                </div>
+                                <div class="tm-special-item-content">
+                                    <h2 class="tm-text-primary tm-special-item-title">{{ item.name }}</h2>
+                                    <p class="tm-special-item-text">{{ item.description }}</p>
+                                    <p class="tm-special-item-price">${{ item.price }}</p>
+                                </div>
+                            </div>
+
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Contact (static for now) -->
+                    <div id="contact" class="tm-page-content">
+                        <div class="tm-black-bg tm-contact-text-container">
+                            <div class="tm-contact-content">
+                                <div class="tm-contact-text">
+                                    <h2 class="tm-text-primary">Contact Breeze</h2>
+                                    <p>What should you try on our menu?</p>
+                                </div>
+                                <dotlottie-player 
+                                    src="https://lottie.host/77918256-5c41-4aaf-a369-e038d69b0b13/jtONK5B62K.lottie" 
+                                    background="transparent" 
+                                    speed="1" 
+                                    style="width: 150px; height: 150px;" 
+                                    loop autoplay>
+                                </dotlottie-player>
+                            </div>
+                        </div>
+
+                        <div class="tm-black-bg tm-contact-form-container tm-align-right">
+                            <form action="https://formspree.io/f/xzzdlqdk" method="POST" id="contact-form">
+                                <div class="tm-form-group">
+                                    <input type="text" name="name" class="tm-form-control" placeholder="Name" required="" />
+                                </div>
+                                <div class="tm-form-group">
+                                    <input type="email" name="email" class="tm-form-control" placeholder="Email" required="" />
+                                </div>
+                                <div class="tm-form-group tm-mb-30">
+                                    <textarea rows="6" name="message" class="tm-form-control" placeholder="Message" required=""></textarea>
+                                </div>
+                                <div>
+                                    <button type="submit" class="tm-btn-primary tm-align-right">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <footer class="tm-site-footer">
+            <p class="tm-black-bg tm-footer-text">The Breeze Cafe © 2025</p>
+        </footer>
+    </div>
+
+    <!-- Video and JS remain unchanged -->
+    <div class="tm-video-wrapper">
+        <i id="tm-video-control-button" class="fas fa-pause"></i>
+        <video autoplay muted loop id="tm-video">
+            <source src="{% static 'video/wave-cafe-video-bg.mp4' %}" type="video/mp4">
+        </video>
+    </div>
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script>
+      function setVideoSize() {
+      const vidWidth = 1920;
+      const vidHeight = 1080;
+      const windowWidth = window.innerWidth;
+      const windowHeight = window.innerHeight;
+      const tempVidWidth = windowHeight * vidWidth / vidHeight;
+      const tempVidHeight = windowWidth * vidHeight / vidWidth;
+      const newVidWidth = tempVidWidth > windowWidth ? tempVidWidth : windowWidth;
+      const newVidHeight = tempVidHeight > windowHeight ? tempVidHeight : windowHeight;
+      const tmVideo = $('#tm-video');
+
+      tmVideo.css('width', newVidWidth);
+      tmVideo.css('height', newVidHeight);
+    }
+
+    function openTab(evt, id) {
+      $('.tm-tab-content').hide();
+      $('#' + id).show();
+      $('.tm-tab-link').removeClass('active');
+      $(evt.currentTarget).addClass('active');
+    }    
+
+    function initPage() {
+      let pageId = location.hash;
+
+      if(pageId) {
+        highlightMenu($(`.tm-page-link[href^="${pageId}"]`)); 
+        showPage($(pageId));
+      }
+      else {
+        pageId = $('.tm-page-link.active').attr('href');
+        showPage($(pageId));
+      }
+    }
+
+    function highlightMenu(menuItem) {
+      $('.tm-page-link').removeClass('active');
+      menuItem.addClass('active');
+    }
+
+    function showPage(page) {
+      $('.tm-page-content').hide();
+      page.show();
+    }
+
+    $(document).ready(function(){
+
+      /***************** Pages *****************/
+
+      initPage();
+
+      $('.tm-page-link').click(function(event) {
+        
+        if(window.innerWidth > 991) {
+          event.preventDefault();
+        }
+
+        highlightMenu($(event.currentTarget));
+        showPage($(event.currentTarget.hash));
+      });
+
+      
+      /***************** Tabs *******************/
+
+      $('.tm-tab-link').on('click', e => {
+        e.preventDefault(); 
+        openTab(e, $(e.target).data('id'));
+      });
+
+      $('.tm-tab-link.active').click(); // Open default tab
+
+
+      /************** Video background *********/
+
+      setVideoSize();
+
+      // Set video background size based on window size
+      let timeout;
+      window.onresize = function(){
+        clearTimeout(timeout);
+        timeout = setTimeout(setVideoSize, 100);
+      };
+
+      // Play/Pause button for video background      
+      const btn = $("#tm-video-control-button");
+
+      btn.on("click", function(e) {
+        const video = document.getElementById("tm-video");
+        $(this).removeClass();
+
+        if (video.paused) {
+          video.play();
+          $(this).addClass("fas fa-pause");
+        } else {
+          video.pause();
+          $(this).addClass("fas fa-play");
+        }
+      });
+    });
+    </script>
+</body>
+</html>
